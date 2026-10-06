@@ -114,7 +114,7 @@ if (string_upper(st[2]) != "YES")
 }
 
 queryString.str("");
-queryString	<< "UPDATE pending SET status=4,last_updated=now()::abstime::int4,decision='Cancelled by applicant',decision_ts=now()::abstime::int4 "
+queryString	<< "UPDATE pending SET status=4,last_updated=floor(extract(epoch from now()))::int4,decision='Cancelled by applicant',decision_ts=floor(extract(epoch from now()))::int4 "
 			<< "WHERE channel_id = "
 			<< chanId
 			<< endl;

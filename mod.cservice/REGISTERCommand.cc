@@ -342,7 +342,7 @@ bool REGISTERCommand::Exec( iClient* theClient, const string& Message )
 						<< "', mass_deop_pro=0, flood_pro=0, flags=0, limit_offset=3, "
 						<< "limit_period=20, limit_grace=1, limit_max=0, userflags=0, "
 						<< "url='', description='', keywords='', registered_ts=0, "
-						<< "channel_ts=0, channel_mode='', comment='', last_updated=now()::abstime::int4 "
+						<< "channel_ts=0, channel_mode='', comment='', last_updated=floor(extract(epoch from now()))::int4 "
 						<< "WHERE id = " << chanId
 						<< ends;
 			if (!bot->SQLDb->Exec(theQuery, true))
@@ -365,7 +365,7 @@ bool REGISTERCommand::Exec( iClient* theClient, const string& Message )
 						<< "flags,limit_offset,limit_period,limit_grace,limit_max,userflags"
 						<< ") VALUES ('"
 						<< escapeSQLChars(st[1])
-						<< "','','','',0,0,'','',now()::abstime::int4,0,0,0,3,20,1,0,0)"
+						<< "','','','',0,0,'','',floor(extract(epoch from now()))::int4,0,0,0,3,20,1,0,0)"
 						<< ends;
 			if (!bot->SQLDb->Exec(theQuery, true))
 			{

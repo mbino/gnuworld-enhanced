@@ -166,7 +166,7 @@ if (option == "ADD")
 	stringstream whitelistQuery;
 	whitelistQuery 	<< "INSERT INTO whitelist (IP, AddedBy, AddedOn, ExpiresAt, Reason) "
                 	<< "VALUES ('" << st[2] << "', '" << theUser->getUserName()
-			<< "', now()::abstime::int4, " << expireTime << ", '"
+			<< "', floor(extract(epoch from now()))::int4, " << expireTime << ", '"
 			<< whiteReason << "')"
 	                << ends;
 

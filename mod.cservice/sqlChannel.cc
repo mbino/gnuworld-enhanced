@@ -279,7 +279,7 @@ queryString	<< queryHeader
 		<< "channel_ts = " << channel_ts << ", "
 		<< "channel_mode = '" << escapeSQLChars(channel_mode) << "', "
 		<< "userflags = " << userflags << ", "
-		<< "last_updated = now()::abstime::int4, "
+		<< "last_updated = floor(extract(epoch from now()))::int4, "
 		<< "limit_offset = " << limit_offset << ", "
 		<< "limit_period = " << limit_period << ", "
 		<< "limit_grace = " << limit_grace << ", "
@@ -320,7 +320,7 @@ queryString	<< queryHeader
 			<< registered_ts << ", "
 			<< channel_ts << ", '"
 			<< escapeSQLChars(channel_mode) << "', "
-			<< "now()::abstime::int4)"
+			<< "floor(extract(epoch from now()))::int4)"
 			<< ends;
 
 #ifdef LOG_SQL

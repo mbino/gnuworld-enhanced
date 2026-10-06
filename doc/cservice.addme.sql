@@ -16,21 +16,21 @@
 --
 
 INSERT into channels (name,flags,channel_ts,registered_ts,last_updated) 
-VALUES ('*',1,now()::abstime::int4,31337,now()::abstime::int4);
+VALUES ('*',1,floor(extract(epoch from now()))::int4,31337,floor(extract(epoch from now()))::int4);
 
 INSERT into channels (name,flags,channel_ts,registered_ts,last_updated)
-VALUES ('#coder-com',1,now()::abstime::int4,31337,now()::abstime::int4);
+VALUES ('#coder-com',1,floor(extract(epoch from now()))::int4,31337,floor(extract(epoch from now()))::int4);
 
 INSERT into users (user_name,password,language_id,last_updated,created_ts) 
-VALUES ('Admin','07d976a29bdb3ff42e19c102852151b28097bbad',1,now()::abstime::int4,now()::abstime::int4);
+VALUES ('Admin','07d976a29bdb3ff42e19c102852151b28097bbad',1,floor(extract(epoch from now()))::int4,floor(extract(epoch from now()))::int4);
 
 INSERT into users_lastseen (user_id,last_seen,last_updated)
-VALUES (1,now()::abstime::int4,now()::abstime::int4);
+VALUES (1,floor(extract(epoch from now()))::int4,floor(extract(epoch from now()))::int4);
 
 INSERT into levels (channel_id,user_id,access,last_updated)
-VALUES (1,1,1000,now()::abstime::int4);
+VALUES (1,1,1000,floor(extract(epoch from now()))::int4);
 
 INSERT into levels (channel_id,user_id,access,last_updated)
-VALUES (2,1,500,now()::abstime::int4);
+VALUES (2,1,500,floor(extract(epoch from now()))::int4);
 
 -- END HERE

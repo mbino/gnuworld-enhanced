@@ -6,7 +6,7 @@ CREATE TABLE glines (
         AddedBy VARCHAR(128) NOT NULL,
         AddedOn INT4 NOT NULL,
         ExpiresAt INT4 NOT NULL,
-        LastUpdated INT4 NOT NULL DEFAULT now()::abstime::int4,
+        LastUpdated INT4 NOT NULL DEFAULT floor(extract(epoch from now()))::int4,
         Reason VARCHAR(255)
         );
 

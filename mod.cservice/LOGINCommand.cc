@@ -380,7 +380,7 @@ if( bot->SQLDb->Exec(queryString, true ) )
 		updateQuery	<< "INSERT INTO users_lastseen (user_id,"
 				<< "last_seen,last_updated) VALUES("
 				<< theUser->getID()
-				<< ",now()::abstime::int4,now()::abstime::int4)"
+				<< ",floor(extract(epoch from now()))::int4,floor(extract(epoch from now()))::int4)"
 				<< ends;
 
 #ifdef LOG_SQL

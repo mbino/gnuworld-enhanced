@@ -253,7 +253,7 @@ queryString	<< queryHeader
 //		<< "verificationdata = '" << verifdata << "', "
 		<< "language_id = " << language_id << ", "
 		<< "maxlogins = " << maxlogins << ", "
-		<< "last_updated = now()::abstime::int4, "
+		<< "last_updated = floor(extract(epoch from now()))::int4, "
 		<< "last_updated_by = '" << escapeSQLChars(last_updated_by) << "', "
 		<< "totp_key = '" << escapeSQLChars(totp_key) << "', "
 		<< "hostname = '" << escapeSQLChars(hostname) << "' "
@@ -300,7 +300,7 @@ queryString	<< queryHeader
 		<< "last_ip = '"
 		<< escapeSQLChars(last_ip)
 		<< "', "
-		<< "last_updated = now()::abstime::int4 "
+		<< "last_updated = floor(extract(epoch from now()))::int4 "
 		<< queryCondition
 		<< id
 		<< ends;
@@ -338,7 +338,7 @@ stringstream queryString;
 queryString	<< queryHeader
 		<< "SET last_seen = "
 		<< last_seen
-		<< ", last_updated = now()::abstime::int4 "
+		<< ", last_updated = floor(extract(epoch from now()))::int4 "
 		<< queryCondition
 		<< id
 		<< ends;
@@ -474,7 +474,7 @@ stringstream theLog;
 theLog	<< "INSERT INTO userlog (ts, user_id, event, message, "
 	<< "last_updated) VALUES "
 	<< "("
-	<< "now()::abstime::int4"
+	<< "floor(extract(epoch from now()))::int4"
 	<< ", "
 	<< id
 	<< ", "
@@ -483,7 +483,7 @@ theLog	<< "INSERT INTO userlog (ts, user_id, event, message, "
  	<< "'"
 	<< escapeSQLChars(theMessage)
 	<< " (By " << userExtra << ")"
-	<< "', now()::abstime::int4)"
+	<< "', floor(extract(epoch from now()))::int4)"
 	<< ends;
 
 #ifdef LOG_SQL
@@ -620,7 +620,7 @@ queryString	<< queryHeader
 		<< 0 << ",'"
 		<< escapeSQLChars(last_updated_by)
 		<< "',"
-		<< "now()::abstime::int4, '"
+		<< "floor(extract(epoch from now()))::int4, '"
 		<< escapeSQLChars(email)
 		<< "', "
 		<< created_ts	<< ", "

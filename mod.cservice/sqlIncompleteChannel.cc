@@ -147,7 +147,7 @@ bool sqlIncompleteChannel::commitSupporters()
 	{
 		queryString.str("");
 		queryString << "INSERT INTO supporters (channel_id,user_id,reason,last_updated) VALUES ("
-					<< chanId << ", " << itr->first << ", '', now()::abstime::int4)"
+					<< chanId << ", " << itr->first << ", '', floor(extract(epoch from now()))::int4)"
 					<< ends;
 
 		if( !SQLDb->Exec(queryString ) )
@@ -198,7 +198,7 @@ bool sqlIncompleteChannel::commit()
 		{
 			queryString.str("");
 			queryString << "INSERT INTO supporters (channel_id,user_id,reason,last_updated) VALUES ("
-						<< chanId << ", " << itr->first << ", '', now()::abstime::int4)"
+						<< chanId << ", " << itr->first << ", '', floor(extract(epoch from now()))::int4)"
 						<< ends;
 
 			if( !SQLDb->Exec(queryString ) )
@@ -262,7 +262,7 @@ bool sqlIncompleteChannel::commitNewPending(unsigned int mngrId, unsigned int ch
 {
 	stringstream theQuery;
 	theQuery 	<< "INSERT INTO pending (channel_id,manager_id,created_ts,decision_ts,decision,comments,description,managername,last_updated,reg_acknowledged,check_start_ts) "
-				<< "VALUES (" << chanId << "," << mngrId << ",now()::abstime::int4,0,'','','','',now()::abstime::int4,'N',0)"
+				<< "VALUES (" << chanId << "," << mngrId << ",floor(extract(epoch from now()))::int4,0,'','','','',floor(extract(epoch from now()))::int4,'N',0)"
 				<< ends;
 
 	#ifdef LOG_SQL

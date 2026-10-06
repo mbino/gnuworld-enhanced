@@ -140,8 +140,8 @@ bool ACCEPTCommand::Exec( iClient* theClient, const string& Message )
 	}
 	/* Quick query to set registered_ts back for this chan. */
 	stringstream reclaimQuery;
-	reclaimQuery	<< "UPDATE channels SET registered_ts = now()::abstime::int4,"
-			<< " last_updated = now()::abstime::int4, "
+	reclaimQuery	<< "UPDATE channels SET registered_ts = floor(extract(epoch from now()))::int4,"
+			<< " last_updated = floor(extract(epoch from now()))::int4, "
 			<< " flags = 0, description = '', url = '', comment = '', keywords = '', channel_mode = '+tn' "
 			//<< " WHERE lower(name) = '"
 			//<< escapeSQLChars(string_lower(st[1]))
@@ -160,7 +160,7 @@ bool ACCEPTCommand::Exec( iClient* theClient, const string& Message )
 	} 
 	/********** Update pending status ***********/
 	theQuery.str("");
-	theQuery	<< "UPDATE pending SET status=3,last_updated=now()::abstime::int4,decision_ts=now()::abstime::int4,reviewed='Y',decision='"
+	theQuery	<< "UPDATE pending SET status=3,last_updated=floor(extract(epoch from now()))::int4,decision_ts=floor(extract(epoch from now()))::int4,reviewed='Y',decision='"
 			<< decision
 			<< "',reviewed_by_id="
 			<< theUser->getID()
@@ -200,7 +200,7 @@ bool ACCEPTCommand::Exec( iClient* theClient, const string& Message )
 	unsigned int mngrId = atoi(bot->SQLDb->GetValue(0,0));
 	/********** Update users LastSeen last_updated ***********/
 	theQuery.str("");
-	theQuery	<< "UPDATE users_lastseen SET last_updated=now()::abstime::int4,last_seen=now()::abstime::int4 WHERE user_id="
+	theQuery	<< "UPDATE users_lastseen SET last_updated=floor(extract(epoch from now()))::int4,last_seen=floor(extract(epoch from now()))::int4 WHERE user_id="
 			<< mngrId
 			<< ends;
 	if( !bot->SQLDb->Exec(theQuery, true ) ) 

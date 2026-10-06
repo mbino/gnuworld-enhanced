@@ -167,7 +167,7 @@ stringstream updateQuery;
 updateQuery	<< "UPDATE supporters SET support = '"
 			<< supportChar
 			<< "'"
-			<< ", last_updated = now()::abstime::int4"
+			<< ", last_updated = floor(extract(epoch from now()))::int4"
 			<< " WHERE channel_id = "
 			<< channel_id
 			<< " AND user_id = "
@@ -251,8 +251,8 @@ if (supportChar == 'Y')
 	{
 		stringstream updatePendingQuery;
 		updatePendingQuery	<< "UPDATE pending SET status = '1',"
-							<< " last_updated = now()::abstime::int4,"
-							<< " check_start_ts = now()::abstime::int4"
+							<< " last_updated = floor(extract(epoch from now()))::int4,"
+							<< " check_start_ts = floor(extract(epoch from now()))::int4"
 							<< " WHERE channel_id = "
 							<< channel_id
 							<< " AND status = '0'"
@@ -285,8 +285,8 @@ if (supportChar == 'N')
 
 	stringstream updatePendingQuery;
 	updatePendingQuery	<< "UPDATE pending SET status = '9',"
-						<< " last_updated = now()::abstime::int4,"
-						<< " decision_ts = now()::abstime::int4,"
+						<< " last_updated = floor(extract(epoch from now()))::int4,"
+						<< " decision_ts = floor(extract(epoch from now()))::int4,"
 						<< " decision = '--AUTOMATIC (REGPROC)-- NON-SUPPORT'"
 						<< " WHERE channel_id = "
 						<< channel_id
@@ -343,10 +343,10 @@ if (supportChar == 'N')
 		noregQuery	<< cmdHeader
 					<< "('', '','"
 					<< escapeSQLChars(channelName) << "',"
-                                       // << "1, (now()::abstime::int4 + (86400*3)), now()::abstime::int4, '* REGPROC', '-NON SUPPORT-'"
- 					<< "1, (now()::abstime::int4 + ("
+                                       // << "1, (floor(extract(epoch from now()))::int4 + (86400*3)), floor(extract(epoch from now()))::int4, '* REGPROC', '-NON SUPPORT-'"
+ 					<< "1, (floor(extract(epoch from now()))::int4 + ("
 					<< noregTime
-					<< ")), now()::abstime::int4, '* REGPROC', '-NON SUPPORT-'"
+					<< ")), floor(extract(epoch from now()))::int4, '* REGPROC', '-NON SUPPORT-'"
 					<< ")" << ends;
 
 #ifdef LOG_SQL
@@ -367,10 +367,10 @@ if (supportChar == 'N')
 					<< escapeSQLChars(managerName) << "', '"
 					<< escapeSQLChars(managerEmail) << "', "
 					<< "'', "
-					//<< "1, (now()::abstime::int4 + (86400*3)), now()::abstime::int4, '* REGPROC', '-NON SUPPORT-'"
-                                        << "1, (now()::abstime::int4 + ("
+					//<< "1, (floor(extract(epoch from now()))::int4 + (86400*3)), floor(extract(epoch from now()))::int4, '* REGPROC', '-NON SUPPORT-'"
+                                        << "1, (floor(extract(epoch from now()))::int4 + ("
 					<< noregTime
-					<< ")), now()::abstime::int4, '* REGPROC', '-NON SUPPORT-'"
+					<< ")), floor(extract(epoch from now()))::int4, '* REGPROC', '-NON SUPPORT-'"
 					<< ")" << ends;
 
 #ifdef LOG_SQL
@@ -387,11 +387,11 @@ if (supportChar == 'N')
 
 		stringstream clogQuery;
 		clogQuery	<< "INSERT INTO channellog (ts, channelid, event, message, last_updated) VALUES ("
-					<< "now()::abstime::int4, "
+					<< "floor(extract(epoch from now()))::int4, "
 					<< channel_id << ", "
 					<< "1, 'Non-support by "
 					<< escapeSQLChars(theUser->getUserName()) << "', "
-					<< "now()::abstime::int4)"
+					<< "floor(extract(epoch from now()))::int4)"
 					<< ends;
 
 #ifdef LOG_SQL

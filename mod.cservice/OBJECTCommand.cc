@@ -150,7 +150,7 @@ bool OBJECTCommand::Exec( iClient* theClient, const string& Message )
 			<< theUser->getID()
 			<< ", '"
 			<< objection
-			<< "', now()::abstime::int4, 'N')"
+			<< "', floor(extract(epoch from now()))::int4, 'N')"
 			<< ends;
 	if( !bot->SQLDb->Exec(theQuery, true ) ) 
 	{ 

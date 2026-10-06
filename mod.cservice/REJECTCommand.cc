@@ -148,7 +148,7 @@ bool REJECTCommand::Exec( iClient* theClient, const string& Message )
 	//if ((status == 0) or (status == 1) or (status == 2) or (status == 8))
 	/********** Update pending status ***********/
 	theQuery.str("");
-	theQuery	<< "UPDATE pending SET status=9,last_updated=now()::abstime::int4,decision_ts=now()::abstime::int4,reviewed='Y',decision='"
+	theQuery	<< "UPDATE pending SET status=9,last_updated=floor(extract(epoch from now()))::int4,decision_ts=floor(extract(epoch from now()))::int4,reviewed='Y',decision='"
 			<< decision
 			<< "',reviewed_by_id="
 			<< theUser->getID()
@@ -189,7 +189,7 @@ bool REJECTCommand::Exec( iClient* theClient, const string& Message )
 	unsigned int mngrId = atoi(bot->SQLDb->GetValue(0,0));	
 	/********** Update users LastSeen last_updated ***********/
 	theQuery.str("");
-	theQuery	<< "UPDATE users_lastseen SET last_updated=now()::abstime::int4,last_seen=now()::abstime::int4 WHERE user_id="
+	theQuery	<< "UPDATE users_lastseen SET last_updated=floor(extract(epoch from now()))::int4,last_seen=floor(extract(epoch from now()))::int4 WHERE user_id="
 			<< mngrId
 			<< ends;
 	if( !bot->SQLDb->Exec(theQuery, true ) ) 

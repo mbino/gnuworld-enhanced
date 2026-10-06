@@ -5,5 +5,5 @@
 --
 
 INSERT INTO variables (var_name,contents,last_updated,hint)
-VALUES ('USE_LOGIN_DELAY', '1', now()::abstime::int4, 'Use login delay when cservice links if set to 1');
+VALUES ('USE_LOGIN_DELAY', '1', floor(extract(epoch from now()))::int4, 'Use login delay when cservice links if set to 1');
 

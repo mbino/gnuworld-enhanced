@@ -122,7 +122,7 @@ if ( (st[1][0] == '#') )
 			<< theUser->getID()
 			<< ", '"
 			<< comment
-			<< "', now()::abstime::int4, 'Y')"
+			<< "', floor(extract(epoch from now()))::int4, 'Y')"
 			<< ends;
 	if( !bot->SQLDb->Exec(theQuery, true ) ) 
 	{ 
